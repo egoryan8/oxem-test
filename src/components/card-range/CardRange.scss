@@ -47,6 +47,18 @@
   }
 }
 
+.input-range__percents {
+  padding: 15px 17px;
+  background: #ebebec;
+  border-radius: 16px;
+  font-family: 'Nekst-Black';
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 120%;
+}
+
+/* === STYLES FOR RANGE === */
+
 .input-range {
   position: absolute;
   background-color: transparent;

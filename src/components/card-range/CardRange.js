@@ -1,13 +1,7 @@
 import React from 'react';
 import './CardRange.scss';
 
-const CardRange = ({ title, min, max, initialValue, char }) => {
-  const [value, setValue] = React.useState(initialValue);
-
-  const onChangeValue = (e) => {
-    setValue(e.target.value);
-  };
-
+const CardRange = ({ title, min, max, value, setValue, char, percents }) => {
   const onBlurChange = (e) => {
     if (e.target.value > max) {
       setValue(max);
@@ -24,10 +18,14 @@ const CardRange = ({ title, min, max, initialValue, char }) => {
           <input
             className="input-range__value input-range__value_input"
             value={value}
-            onChange={onChangeValue}
+            onChange={(e) => setValue(e.target.value)}
             onBlur={onBlurChange}
           />
-          <span className="input-range__value">{char}</span>
+          {percents ? (
+            <span className="input-range__percents">{'true'}</span>
+          ) : (
+            <span className="input-range__value">{char}</span>
+          )}
         </div>
         <input
           className="input-range"
@@ -36,7 +34,7 @@ const CardRange = ({ title, min, max, initialValue, char }) => {
           max={max}
           disabled={false}
           value={value}
-          onChange={onChangeValue}
+          onChange={(e) => setValue(e.target.value)}
         />
       </div>
     </li>
