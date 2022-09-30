@@ -1,0 +1,151 @@
+@import url(../../fonts/fonts.css);
+
+.card-range {
+  list-style: none;
+  width: 100%;
+}
+
+.input-range__wrapper {
+  margin-top: 24px;
+  padding: 16px 24px 13px;
+  background: #f3f3f4;
+  border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-range__value-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.card-range__title {
+  margin: 0;
+  font-family: 'Gilroy', Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+}
+
+.input-range__value {
+  color: #575757;
+  font-family: 'Nekst-Black';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 36px;
+
+  &_input {
+    border: none;
+    background: transparent;
+    width: 90%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.input-range {
+  position: absolute;
+  background-color: transparent;
+  display: block;
+  color: #ff9514;
+  --thumb-height: 20px;
+  --track-height: 1px;
+  --track-color: #e1e1e1;
+  --clip-edges: 1px;
+  cursor: pointer;
+  overflow: hidden;
+  width: 23%;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.input-range:active {
+  cursor: grabbing;
+}
+
+.input-range:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* === WebKit specific styles === */
+.input-range,
+.input-range::-webkit-slider-runnable-track,
+.input-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  transition: all ease 100ms;
+  height: var(--thumb-height);
+}
+
+.input-range::-webkit-slider-runnable-track,
+.input-range::-webkit-slider-thumb {
+  position: relative;
+}
+
+.input-range::-webkit-slider-thumb {
+  --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+  --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+  --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+  --clip-further: calc(100% + 1px);
+  --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0 100vmax currentColor;
+
+  width: var(--thumb-width, var(--thumb-height));
+  background: linear-gradient(currentColor 0 0) scroll no-repeat left center / 50%
+    calc(var(--track-height) + 1px);
+  background-color: currentColor;
+  box-shadow: var(--box-fill);
+  border-radius: var(--thumb-width, var(--thumb-height));
+
+  filter: brightness(100%);
+  clip-path: polygon(
+    100% -1px,
+    var(--clip-edges) -1px,
+    0 var(--clip-top),
+    -100vmax var(--clip-top),
+    -100vmax var(--clip-bottom),
+    0 var(--clip-bottom),
+    var(--clip-edges) 100%,
+    var(--clip-further) var(--clip-further)
+  );
+}
+
+.input-range:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+.input-range::-webkit-slider-runnable-track {
+  background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100%
+    var(--track-height);
+}
+
+.input-range:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+}
+
+/* === Mozila specific styles === */
+
+.input-range::-moz-range-track {
+  border-radius: 2px;
+  height: 1px;
+  background: #e1e1e1;
+}
+.input-range::-moz-range-thumb {
+  border: none;
+  background: #ff9514;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  -webkit-appearance: none;
+  margin-top: -9px;
+}
+
+.input-range::-moz-range-progress {
+  background: #ff9514;
+  border-radius: 2px;
+  height: 2px;
+}
