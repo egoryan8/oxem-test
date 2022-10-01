@@ -22,5 +22,31 @@
   margin: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(100px, 427px));
-  gap: 32px;
+  gap: 44px 32px;
+}
+
+.send-request-btn {
+  background: #ff9514;
+  border-radius: 40px;
+  border: none;
+  font-family: 'Nekst-Black';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 36px;
+  color: #ffffff;
+  width: 426px;
+  height: 68px;
+  align-self: center;
+  cursor: pointer;
+  transition: all 0.7s;
+  &:hover {
+    background: #111111;
+  }
+  &:active {
+    background: #575757;
+  }
+  &:disabled {
+    background: rgba(255, 149, 20, 0.4);
+  }
 }

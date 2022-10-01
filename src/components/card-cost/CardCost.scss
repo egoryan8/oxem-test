@@ -1,0 +1,21 @@
+@import url(../../fonts/fonts.css);
+
+.card-cost {
+  display: flex;
+  flex-direction: column;
+  &__title {
+    font-family: 'Gilroy';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #575757;
+  }
+  &__sum {
+    font-family: 'Nekst-Black';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 54px;
+    line-height: 90%;
+    color: #575757;
+  }
+}
