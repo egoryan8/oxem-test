@@ -1,14 +1,21 @@
 @import url(../../fonts/fonts.css);
 
 .card-cost {
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   &__title {
+    margin: 0 0 10px;
     font-family: 'Gilroy';
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
     color: #575757;
+    @media (max-width: 767px) {
+      font-size: 14px;
+      color: #333333;
+      margin-bottom: 5px;
+    }
   }
   &__sum {
     font-family: 'Nekst-Black';
@@ -17,5 +24,16 @@
     font-size: 54px;
     line-height: 90%;
     color: #575757;
+    @media (max-width: 1439px) {
+      color: #333333;
+    }
+    @media (max-width: 767px) {
+      font-size: 22px;
+    }
+  }
+  @media (max-width: 767px) {
+    &:last-of-type {
+      margin-top: 13px;
+    }
   }
 }

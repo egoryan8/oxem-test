@@ -10,35 +10,36 @@ function App() {
   const percentsTo = percents / 100;
   const [leasing, setLeasing] = useState(60);
   const [initial, setInitial] = useState(Math.round(percentsTo * carPrice));
-  const [monthPay, setMonthPay] = useState(0);
-  const [sum, setSum] = useState(0);
+  const [monthPay, setMonthPay] = useState(
+    Math.round(
+      (carPrice - initial) * ((0.035 * Math.pow(1.035, leasing)) / (Math.pow(1.035, leasing) - 1)),
+    ),
+  );
+  const [sum, setSum] = useState(initial + leasing * monthPay);
   const CAR_PRICE_MIN = 1000000;
   const CAR_PRICE_MAX = 6000000;
   const PERCENTS_MIN = 10;
   const PERCENTS_MAX = 60;
   const LEASING_MIN = 1;
   const LEASING_MAX = 60;
-  const calcMonthPay = () => {
-    setMonthPay(
-      Math.round(
-        (carPrice - initial) *
-          ((0.035 * Math.pow(1.035, leasing)) / (Math.pow(1.035, leasing) - 1)),
-      ),
+
+  const calcMonthPay = (price, initialValue, leasingPercents) => {
+    return Math.round(
+      (price - Number(initialValue)) *
+        ((0.035 * Math.pow(1.035, leasingPercents)) / (Math.pow(1.035, leasingPercents) - 1)),
     );
   };
 
-  const calcSum = () => {
-    setSum(initial + leasing * monthPay);
+  const calcSum = (initialValue, leasingPercents, month) => {
+    return Number(initialValue) + leasingPercents * month;
   };
 
-  const onBlurChange = (e, min, max) => {
+  const onBlurChange = (e, min, max, setValue) => {
     if (e.target.value > max) {
-      return max;
-    }
-    if (e.target.value < min) {
-      return min;
-    }
-    return e.target.value;
+      setValue(max);
+    } else if (e.target.value < min) {
+      setValue(min);
+    } else setValue(e.target.value);
   };
 
   function numberWithSpaces(x) {
@@ -46,30 +47,41 @@ function App() {
   }
 
   const onChangePercents = (e) => {
-    setInitial(Math.round((e.target.value / 100) * carPrice));
+    const initialValue = Math.round((e.target.value / 100) * carPrice);
+    setInitial(initialValue);
     setPercents(e.target.value);
-    calcMonthPay();
-    calcSum();
+    const month = calcMonthPay(carPrice, initialValue, leasing);
+    setMonthPay(month);
+    const sum = calcSum(initialValue, leasing, month);
+    setSum(sum);
   };
 
   const onChangePrice = (e) => {
+    const initialValue = Math.round((percents / 100) * e.target.value);
     setCarPrice(e.target.value);
-    setInitial(Math.round((percents / 100) * e.target.value));
-    calcMonthPay();
-    calcSum();
+    setInitial(initialValue);
+    const month = calcMonthPay(e.target.value, initialValue, leasing);
+    setMonthPay(month);
+    const sum = calcSum(initialValue, leasing, month);
+    setSum(sum);
   };
 
   const onChangeInitial = (e) => {
+    const percents = Math.round((e.target.value / carPrice) * 100);
     setInitial(e.target.value);
-    setPercents(Math.round((e.target.value / carPrice) * 100));
-    calcMonthPay();
-    calcSum();
+    setPercents(percents);
+    const month = calcMonthPay(carPrice, e.target.value, leasing);
+    setMonthPay(month);
+    const sum = calcSum(e.target.value, leasing, month);
+    setSum(sum);
   };
 
   const onChangeLeasing = (e) => {
     setLeasing(e.target.value);
-    calcSum();
-    calcMonthPay();
+    const month = calcMonthPay(carPrice, initial, e.target.value);
+    setMonthPay(month);
+    const sum = calcSum(initial, e.target.value, month);
+    setSum(sum);
   };
 
   return (
@@ -84,9 +96,11 @@ function App() {
                 className="input-range__value input-range__value_input"
                 value={carPrice}
                 onChange={onChangePrice}
-                onBlur={(e) => onBlurChange(e, CAR_PRICE_MIN, CAR_PRICE_MAX)}
+                onBlur={(e) => {
+                  onBlurChange(e, CAR_PRICE_MIN, CAR_PRICE_MAX, setCarPrice);
+                }}
               />
-              <span className="input-range__value">₽</span>
+              <span className="input-range__value">&#8381;</span>
             </div>
             <input
               className="input-range"
@@ -107,6 +121,10 @@ function App() {
                 className="input-range__value input-range__value_input"
                 value={initial}
                 onChange={onChangeInitial}
+                onBlur={(e) => {
+                  onBlurChange(e, PERCENTS_MIN, PERCENTS_MAX, setPercents);
+                  setInitial();
+                }}
               />
               <span className="input-range__percents">{percents}%</span>
             </div>
@@ -130,7 +148,7 @@ function App() {
                 className="input-range__value input-range__value_input"
                 value={leasing}
                 onChange={onChangeLeasing}
-                onBlur={(e) => onBlurChange(e, LEASING_MIN, LEASING_MAX)}
+                onBlur={(e) => onBlurChange(e, LEASING_MIN, LEASING_MAX, setLeasing)}
               />
               <span className="input-range__value">мес.</span>
             </div>

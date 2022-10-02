@@ -3,11 +3,17 @@
 .card-range {
   list-style: none;
   width: 100%;
+  @media (max-width: 1439px) {
+    grid-column: 1/ 3;
+  }
+  @media (max-width: 767px) {
+    grid-column: 1 / 2;
+  }
 }
 
 .input-range__wrapper {
   margin-top: 24px;
-  padding: 16px 24px 13px;
+  padding: 16px 7px 13px 24px;
   background: #f3f3f4;
   border-radius: 16px;
   width: 100%;
@@ -16,6 +22,11 @@
   position: relative;
   display: flex;
   align-items: center;
+  @media (max-width: 767px) {
+    margin-top: 8px;
+    height: 60px;
+    padding-left: 20px;
+  }
 }
 
 .input-range__value-wrapper {
@@ -24,21 +35,29 @@
   justify-content: space-between;
 }
 .card-range__title {
+  color: #575757;
   margin: 0;
   font-family: 'Gilroy', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 125%;
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+    color: #333e48;
+  }
 }
 
 .input-range__value {
+  margin-right: 24px;
   color: #575757;
   font-family: 'Nekst-Black';
   font-style: normal;
   font-weight: 900;
   font-size: 30px;
-  line-height: 36px;
+  line-height: 90%;
+  padding: 0;
 
   &_input {
     border: none;
@@ -48,6 +67,11 @@
     &:focus {
       outline: none;
     }
+  }
+
+  @media (max-width: 767px) {
+    font-size: 22px;
+    color: #333e48;
   }
 }
 
@@ -78,6 +102,9 @@
   width: calc(100% - 48px);
   -moz-appearance: none;
   appearance: none;
+  @media (max-width: 767px) {
+    width: calc(100% - 40px);
+  }
 }
 
 .input-range:active {
