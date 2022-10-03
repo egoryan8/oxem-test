@@ -73,6 +73,10 @@
   }
 }
 
+.input-range__value_input:focus .input-range__wrapper {
+  background: white;
+}
+
 .input-range__percents {
   padding: 15px 17px;
   background: #ebebec;
@@ -112,6 +116,10 @@
 .input-range:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.input-range:hover {
+  --thumb-height: 24px;
 }
 
 /* === WebKit specific styles === */

@@ -38,6 +38,7 @@
 }
 
 .cards {
+  position: relative;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -62,7 +63,7 @@
   background: #ff9514;
   border-radius: 40px;
   border: none;
-  font-family: 'Nekst-Black';
+  font-family: 'Nekst-Black', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 30px;
@@ -97,4 +98,13 @@
 
 .preloader {
   height: 95%;
+}
+
+.error {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  color: red;
+  font-size: 16px;
+  font-family: 'Gilroy', Arial, Helvetica, sans-serif;
 }
