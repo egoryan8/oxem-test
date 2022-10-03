@@ -12,7 +12,7 @@
 .input-range__wrapper {
   margin-top: 24px;
   padding: 16px 7px 13px 24px;
-  background: #f3f3f4;
+  background-color: #f3f3f4;
   border-radius: 16px;
   width: 100%;
   box-sizing: border-box;
@@ -24,6 +24,10 @@
     margin-top: 8px;
     height: 60px;
     padding-left: 20px;
+  }
+  &_focused {
+    background-color: #fff;
+    border: 1px solid #f3f3f4;
   }
 }
 

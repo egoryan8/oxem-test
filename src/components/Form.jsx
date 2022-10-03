@@ -8,6 +8,7 @@ import { numberWithSpaces } from '../utils/numberWithSpaces';
 import '../scss/CardCost.scss';
 import '../scss/CardRange.scss';
 import Preloader from './Preloader';
+import { addFocus, removeFocus } from '../utils/focusHandlers';
 
 const CAR_PRICE_MIN = 1000000;
 const CAR_PRICE_MAX = 6000000;
@@ -33,6 +34,8 @@ const Form = () => {
     } else if (e.target.value < min) {
       setValue(min);
     } else setValue(e.target.value);
+
+    removeFocus(e);
   };
 
   const onChangePercents = (e) => {
@@ -109,6 +112,7 @@ const Form = () => {
               onBlur={(e) => onBlurChange(e, CAR_PRICE_MIN, CAR_PRICE_MAX, setCarPrice)}
               disabled={isDisabled}
               maxLength="7"
+              onClick={addFocus}
             />
             <span className="input-range__value">&#8381;</span>
           </div>
@@ -134,6 +138,8 @@ const Form = () => {
               onChange={onChangeInitial}
               disabled={isDisabled}
               maxLength="7"
+              onClick={addFocus}
+              onBlur={removeFocus}
             />
             <span className="input-range__percents">{percents}%</span>
           </div>
@@ -160,6 +166,7 @@ const Form = () => {
               onBlur={(e) => onBlurChange(e, LEASING_MIN, LEASING_MAX, setLeasing)}
               disabled={isDisabled}
               maxLength="2"
+              onClick={addFocus}
             />
             <span className="input-range__value">мес.</span>
           </div>
