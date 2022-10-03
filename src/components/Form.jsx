@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 import { calcMonthPay } from '../helpers/calcMonthPay';
 import { calcSum } from '../helpers/calcSum';
+import { handleSendRequest } from '../helpers/handleSendRequest';
 import { numberWithSpaces } from '../helpers/numberWithSpaces';
 
 import '../scss/CardCost.scss';
 import '../scss/CardRange.scss';
+import Preloader from './Preloader';
 
 const CAR_PRICE_MIN = 1000000;
 const CAR_PRICE_MAX = 6000000;
@@ -21,6 +23,7 @@ const Form = () => {
   const [initial, setInitial] = useState(Math.round((percents / 100) * carPrice));
   const [monthPay, setMonthPay] = useState(calcMonthPay(carPrice, initial, leasing));
   const [sum, setSum] = useState(calcSum(initial, leasing, monthPay));
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const onBlurChange = (e, min, max, setValue) => {
     if (e.target.value > max) {
@@ -64,6 +67,14 @@ const Form = () => {
     setSum(calcSum(initial, e.target.value, month));
   };
 
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    setIsDisabled(true);
+    handleSendRequest({ carPrice, initial, percents, leasing, monthPay, sum }).then((res) => {
+      setIsDisabled(false);
+    });
+  };
+
   return (
     <form className="cards">
       <div className="card-range">
@@ -78,6 +89,7 @@ const Form = () => {
               onBlur={(e) => {
                 onBlurChange(e, CAR_PRICE_MIN, CAR_PRICE_MAX, setCarPrice, onChangePrice);
               }}
+              disabled={isDisabled}
             />
             <span className="input-range__value">&#8381;</span>
           </div>
@@ -89,6 +101,7 @@ const Form = () => {
             value={carPrice}
             onChange={onChangePrice}
             step="1000"
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -104,6 +117,7 @@ const Form = () => {
                 onBlurChange(e, PERCENTS_MIN, PERCENTS_MAX, setPercents);
                 setInitial();
               }}
+              disabled={isDisabled}
             />
             <span className="input-range__percents">{percents}%</span>
           </div>
@@ -112,10 +126,10 @@ const Form = () => {
             type="range"
             min={PERCENTS_MIN}
             max={PERCENTS_MAX}
-            disabled={false}
             value={percents}
             onChange={onChangePercents}
             step="1"
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -128,6 +142,7 @@ const Form = () => {
               value={leasing}
               onChange={onChangeLeasing}
               onBlur={(e) => onBlurChange(e, LEASING_MIN, LEASING_MAX, setLeasing)}
+              disabled={isDisabled}
             />
             <span className="input-range__value">мес.</span>
           </div>
@@ -138,6 +153,7 @@ const Form = () => {
             max={LEASING_MAX}
             value={leasing}
             onChange={onChangeLeasing}
+            disabled={isDisabled}
           />
         </div>
       </div>
@@ -149,7 +165,12 @@ const Form = () => {
         <h2 className="card-cost__title">Ежемесячный платеж от</h2>
         <div className="card-cost__sum">{numberWithSpaces(monthPay)} ₽</div>
       </div>
-      <button className="send-request-btn">Оставить заявку</button>
+      <button
+        className="send-request-btn"
+        disabled={isDisabled}
+        onClick={(e) => handleSubmitForm(e)}>
+        {isDisabled ? <Preloader /> : 'Оставить заявку'}
+      </button>
     </form>
   );
 };

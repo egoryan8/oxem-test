@@ -72,6 +72,9 @@
   height: 68px;
   align-self: center;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 0.7s;
   &:hover {
     background: #111111;
@@ -81,6 +84,7 @@
   }
   &:disabled {
     background: rgba(255, 149, 20, 0.4);
+    cursor: not-allowed;
   }
   @media (max-width: 1439px) {
     margin-top: 12px;
@@ -89,4 +93,8 @@
     margin-top: 14px;
     font-size: 22px;
   }
+}
+
+.preloader {
+  height: 95%;
 }
